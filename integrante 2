@@ -1,0 +1,191 @@
+# Guía Paso a Paso para el Estudiante (Integrante 2) – Foro, Pruebas y GitHub
+
+---
+
+## 1. ¿Cómo probar el código en tu computador con un solo clic?
+
+1. Abre la carpeta del trabajo en el Explorador de archivos de Windows.
+2. Haz **doble clic** sobre el archivo **`PROBAR_PROYECTO.bat`**.
+3. Se abrirá automáticamente una ventana ejecutando:
+   - **Primero:** Las pruebas del **Integrante 2** (`pruebas_integrante_2.py`). Validan las clases `Servicio` y `ReservaSala` en sus **dos copias**: `servicio.py` (raíz) y `Aporte_Exclusivo_Integrante_2/servicio_integrante_2.py`.
+   - **Segundo:** La simulación completa de las **12 operaciones** (`main.py` y `simulacion.py`) generando el archivo `sistema.log`.
+4. Comprueba que en la ventana aparezca:
+   - Dos veces el mensaje `TODAS LAS PRUEBAS SECUENCIALES DEL INTEGRANTE 2 PASARON`, una por cada copia.
+   - Al final de las pruebas: `RESULTADO: 48 pruebas automáticas ejecutadas, 48 correctas.`
+   - En la simulación: las operaciones 1 a 12, los 3 servicios activos y las 5 reservas con estados `Confirmada`, `Cancelada`, `Confirmada`, `Fallida` y `Fallida`.
+
+   Si alguna prueba muestra `FAIL` o `ERROR`, **no subas los cambios** hasta corregirla.
+5. Puedes tomar captura de pantalla de esa ventana para adjuntarla en el foro de la UNAD como evidencia de tu ejecución secuencial.
+
+> Si no usas Windows, abre una terminal en la carpeta del trabajo y ejecuta:
+> `python Aporte_Exclusivo_Integrante_2/pruebas_integrante_2.py` y luego `python main.py`.
+
+---
+
+## 2. ¿Cómo integrar tu aporte en el GitHub del grupo mediante una rama?
+
+**No borres el contenido de `servicio.py` ni pegues el archivo completo.** Ese archivo también contiene las clases `AlquilerEquipo` (Integrante 3) y `AsesoriaEspecializada` (Integrante 4). Si lo reemplazas entero, puedes borrar cambios que tus compañeros hayan hecho en el repositorio.
+
+Debes trabajar en una **rama** propia, cambiar solo tu parte y **revisar las diferencias** antes de unirlas a la rama principal (`main`) del grupo.
+
+### ¿Qué cambia exactamente en tu aporte?
+
+| Dónde (en `servicio.py`) | Cambio |
+| :--- | :--- |
+| Importaciones al inicio del archivo | Se agrega `import math` debajo de `import logging`. |
+| `Servicio.validar_parametros()` | La tarifa (`costo_base`) debe ser numérica (no `True`/`False`), finita (no NaN ni infinito) y mayor que 0. `disponible` solo acepta `True` o `False`. |
+| `Servicio.aplicar_impuestos_y_descuentos()` | El subtotal debe ser un número finito, los porcentajes no pueden ser booleanos y un importe que se desborde (infinito o NaN) se rechaza con `ValueError`. |
+| `ReservaSala.calcular_costo()` | `incluir_proyector` solo acepta `True` o `False`, las horas deben ser finitas y los errores se convierten en `CalculoCostoError`. |
+
+No cambian `__init__()`, `describir()`, las firmas de los métodos ni las excepciones que usan los demás módulos. El código de referencia es el de **`Aporte_Exclusivo_Integrante_2/servicio_integrante_2.py`**, idéntico al de `Servicio` y `ReservaSala` en el `servicio.py` de esta carpeta.
+
+Nombre sugerido para la rama: **`integrante2-servicio-reservasala`**
+
+Repositorio del grupo: **https://github.com/Diazbetancourthj/Trabajo-colaborativo-Fase-4**
+
+---
+
+### Opción A: Desde el navegador (sin comandos)
+
+#### Paso A1: Crear la rama
+1. Inicia sesión con tu cuenta de GitHub y entra al repositorio del grupo.
+2. Arriba de la lista de archivos, haz clic en el selector de ramas (el botón que dice **`main`**).
+3. Escribe `integrante2-servicio-reservasala` y haz clic en **`Create branch integrante2-servicio-reservasala from main`**.
+4. Verifica que el selector ahora muestre el nombre de tu rama. **Todos los pasos siguientes se hacen con esa rama seleccionada.**
+
+> El aporte debe quedar registrado **con tu propia cuenta**: la guía del curso exige la participación de cada integrante en el repositorio. Si tu cuenta no aparece en *Contributors*, pide al dueño del repositorio (Diazbetancourthj) que te agregue en **`Settings` -> `Collaborators`**. Mientras tanto, GitHub te ofrecerá crear un *fork* (copia en tu cuenta) al editar; el procedimiento es el mismo y el *pull request* llegará igualmente al repositorio del grupo.
+
+#### Paso A2: Editar solo tu parte de `servicio.py`
+1. Con tu rama seleccionada, abre **`servicio.py`** y haz clic en el **ícono del lápiz (`Edit this file`)**.
+2. En las importaciones, debajo de `import logging`, agrega (si no existe ya):
+   ```python
+   # Importa math para comprobar que tarifas e importes sean números finitos (no NaN ni infinito)
+   import math
+   ```
+3. Busca la línea `class Servicio(ABC):`. Selecciona desde esa línea hasta el final de la clase `ReservaSala` (el `return` de su método `describir()`), es decir, justo **antes** de donde empieza `class AlquilerEquipo(Servicio):` o su bloque de comentarios.
+4. Reemplaza **solo esa selección** por las clases `Servicio` y `ReservaSala` del archivo `Aporte_Exclusivo_Integrante_2/servicio_integrante_2.py`: desde `class Servicio(ABC):` hasta el final de `describir()` de `ReservaSala`. **No copies** las líneas de `sys.path` del inicio de ese archivo ni el bloque `if __name__ == "__main__":` del final.
+5. No modifiques `AlquilerEquipo`, `AsesoriaEspecializada` ni ningún otro archivo de tus compañeros.
+6. Haz clic en **`Commit changes...`** y escribe como mensaje:
+   `Integrante 2: proyector booleano y tarifas/importes finitos en Servicio y ReservaSala`.
+   Selecciona **`Commit directly to the integrante2-servicio-reservasala branch`** y confirma.
+   *(Si por error editaste estando en `main`, elige `Create a new branch for this commit and start a pull request` y escribe el nombre de la rama).*
+
+> Si en el repositorio `servicio.py` está vacío o todavía no tiene las clases de los integrantes 3 y 4, acuerda con ellos en el foro antes de subir el archivo completo de esta carpeta. En ese caso también hazlo **en tu rama**, para que el equipo revise las diferencias.
+
+#### Paso A3: Subir las pruebas a la misma rama
+1. Con tu rama seleccionada, en la página principal del repositorio haz clic en **`Add file` -> `Upload files`**.
+2. Arrastra los archivos **`servicio_integrante_2.py`** y **`pruebas_integrante_2.py`** dentro de una carpeta llamada `Aporte_Exclusivo_Integrante_2` (las pruebas necesitan ambos archivos juntos). Los archivos `.md` de esa carpeta son guías para ti y no hace falta subirlos.
+3. Elige **`Commit directly to the integrante2-servicio-reservasala branch`** y haz clic en **`Commit changes`**.
+4. Si en el repositorio están vacíos `excepciones.py`, `logger_config.py`, `simulacion.py`, `main.py` o `cliente.py`, `main.py` no podrá ejecutarse. Súbelos **solo con el acuerdo de sus responsables**, también en tu rama, para que aparezcan en la revisión.
+
+#### Paso A4: Abrir el *pull request* y revisar las diferencias
+1. GitHub mostrará el aviso **`integrante2-servicio-reservasala had recent pushes`** con el botón **`Compare & pull request`**. Si no aparece, ve a la pestaña **`Pull requests` -> `New pull request`** y elige `base: main` y `compare: integrante2-servicio-reservasala`.
+2. Escribe un título (por ejemplo, `Integrante 2: correcciones en Servicio y ReservaSala`) y, en la descripción, la tabla de cambios de esta guía y el resultado de tus pruebas. Haz clic en **`Create pull request`**.
+3. Abre la pestaña **`Files changed`** y revisa línea por línea:
+   - En `servicio.py`, las líneas verdes (agregadas) y rojas (eliminadas) deben estar **solo** en las importaciones y en las clases `Servicio` y `ReservaSala`.
+   - **No debe haber líneas rojas** en `AlquilerEquipo`, `AsesoriaEspecializada` ni en archivos de tus compañeros.
+   - Si ves cambios inesperados, **no unas la rama**: corrige el archivo en tu rama (otro *commit*) y vuelve a revisar.
+4. Pide a tus compañeros que revisen el *pull request* (botón **`Reviewers`** o con un mensaje en el foro).
+
+#### Paso A5: Descargar la rama y ejecutar `main.py` para comprobarla
+1. En la página principal del repositorio, selecciona tu rama `integrante2-servicio-reservasala` en el selector de ramas.
+2. Haz clic en el botón verde **`Code` -> `Download ZIP`**. El ZIP contiene la versión de **la rama seleccionada**.
+3. Extrae el ZIP en una carpeta nueva, por ejemplo `Escritorio\prueba_rama`. No lo extraigas encima de tu carpeta de trabajo.
+4. Abre una terminal en la carpeta extraída. En el Explorador de Windows, escribe `cmd` en la barra de direcciones y presiona Enter.
+5. Ejecuta:
+   ```
+   python main.py
+   ```
+   *(Si `python` no se reconoce, usa `py main.py`).*
+   Debes ver las **operaciones 1 a 12**, el mensaje `El sistema completó todas las operaciones de forma estable...`, **3 servicios activos** y **5 reservas** con estados `Confirmada`, `Cancelada`, `Confirmada`, `Fallida` y `Fallida`. También se debe crear `sistema.log` en esa carpeta con las líneas `INICIO DE EJECUCIÓN` y `FIN DE EJECUCIÓN`.
+6. Si subiste las pruebas, ejecuta también:
+   ```
+   python Aporte_Exclusivo_Integrante_2\pruebas_integrante_2.py
+   ```
+   El resultado esperado es `RESULTADO: 48 pruebas automáticas ejecutadas, 48 correctas.`
+7. Si algo falla:
+   - `ModuleNotFoundError` o `ImportError`: falta algún archivo del proyecto o está vacío en el repositorio.
+   - `NameError: name 'math' is not defined`: falta `import math` en `servicio.py`.
+   - Falla `test_servicio_y_reservasala_tienen_la_misma_logica_en_ambas_copias`: las clases pegadas en `servicio.py` no coinciden con `servicio_integrante_2.py`.
+   - Fallan las pruebas `test_main_...`: esas dos pruebas verifican los resultados de la simulación de este paquete (totales `$599.16`, `$642.60` y `$540.00`). Si el equipo modificó `simulacion.py` en el repositorio, revisen juntos los valores esperados antes de unir la rama.
+
+#### Paso A6: Unir la rama al proyecto del grupo
+1. Haz la unión solo cuando se cumplan tres condiciones: revisaste las diferencias (Paso A4), la rama descargada funciona (Paso A5) y el equipo está de acuerdo.
+2. Entra en el *pull request* y haz clic en **`Merge pull request` -> `Confirm merge`**. Según los permisos, puede hacerlo el dueño del repositorio.
+3. Opcional: haz clic en **`Delete branch`** para borrar la rama ya unida.
+4. Selecciona de nuevo `main`, descarga el ZIP (`Code -> Download ZIP`) y vuelve a ejecutar `python main.py` para confirmar que la versión final del grupo funciona.
+
+---
+
+### Opción B: Con Git desde la terminal
+
+```bash
+# 1. Descargar el repositorio y crear tu rama
+git clone https://github.com/Diazbetancourthj/Trabajo-colaborativo-Fase-4.git
+cd Trabajo-colaborativo-Fase-4
+git switch -c integrante2-servicio-reservasala
+
+# 2. Edita servicio.py: agrega "import math" y reemplaza SOLO las clases Servicio y ReservaSala
+#    Copia la carpeta Aporte_Exclusivo_Integrante_2 (servicio_integrante_2.py y pruebas_integrante_2.py)
+
+# 3. Revisar las diferencias antes de guardar el cambio
+git diff --stat          # qué archivos cambiaron
+git diff servicio.py     # solo deben aparecer import math, Servicio y ReservaSala
+
+# 4. Probar
+python Aporte_Exclusivo_Integrante_2/pruebas_integrante_2.py
+python main.py
+
+# 5. Guardar y publicar la rama (nombra los archivos; no uses "git add ." para no subir sistema.log ni __pycache__)
+git add servicio.py Aporte_Exclusivo_Integrante_2/servicio_integrante_2.py Aporte_Exclusivo_Integrante_2/pruebas_integrante_2.py
+git commit -m "Integrante 2: proyector booleano y tarifas/importes finitos en Servicio y ReservaSala"
+git push -u origin integrante2-servicio-reservasala
+```
+
+Después abre el *pull request* en GitHub y revisa **`Files changed`** igual que en el Paso A4.
+
+Para que cualquier integrante descargue la rama y la pruebe:
+
+```bash
+git clone --branch integrante2-servicio-reservasala https://github.com/Diazbetancourthj/Trabajo-colaborativo-Fase-4.git prueba-rama
+cd prueba-rama
+python main.py
+```
+
+Si ya tienen el repositorio clonado: `git fetch origin` y luego `git switch integrante2-servicio-reservasala`.
+
+---
+
+## 3. Lista de verificación antes de entregar (la actividad cierra el domingo 22 de noviembre de 2026)
+
+- [ ] **Portada del informe** (Word y PDF): reemplaza `[Nombre del Estudiante – Rol: Integrante 2]`, agrega el número de grupo y el nombre del tutor. Como el PDF es la evidencia grupal, acuerda con el equipo si llevan los nombres de los cinco integrantes. Después de editar el Word, vuelve a exportarlo a PDF o corrige también el PDF.
+- [ ] **Cita de Cuevas Álvarez (2016)**: el informe la cita con las páginas 373–385 que asigna la guía del curso para el manejo de excepciones. Abre el libro en eLibro y confirma que esas páginas tratan ese tema.
+- [ ] **GitHub**: tu aporte (`servicio.py`, más `servicio_integrante_2.py` y `pruebas_integrante_2.py` si el equipo lo acuerda) subido **desde tu cuenta** en una rama, con el *pull request* revisado y unido a `main`.
+- [ ] **Integrante 5**: comparte en el foro el archivo `Propuesta_para_Integrante_5_simulacion.md`. El Anexo 3 pide manejar parámetros faltantes y hoy `simulacion.py` no lo hace; ese archivo trae el cambio listo y probado para que lo aplique quien es responsable de ese módulo.
+- [ ] **Prueba final**: descarga `main` desde GitHub (`Code -> Download ZIP`) y ejecuta `python main.py`.
+- [ ] **Foro**: publica el mensaje de la sección 4 con el enlace del repositorio y adjunta el informe en PDF.
+
+---
+
+## 4. Mensaje Listo para Copiar y Pegar en el Foro Colaborativo de la UNAD
+
+> **Asunto:** Aporte Colaborativo Fase 4 - Desarrollo y Validación Secuencial del Integrante 2 (`Servicio` y `ReservaSala` en `servicio.py`)
+>
+> Cordial saludo estimado tutor y compañeros de grupo,
+>
+> De acuerdo con la Guía de Aprendizaje de la Fase 4, el Anexo 3 (*Ejercicio 1: Sistema Integral de Gestión de Clientes, Servicios y Reservas - Software FJ*) y la matriz de distribución de archivos y clases de la webconferencia, comparto mi aporte correspondiente al **Integrante 2** en el archivo **`servicio.py`**:
+>
+> 1. **Clase Abstracta `Servicio(ABC)`:**
+>    - Implementación de `__init__()`, métodos abstractos `@abstractmethod` `calcular_costo()` y `describir()`, y método `validar_parametros()` con validaciones de código, nombre, costo base (numérico, finito y mayor que 0) y disponibilidad (solo `True` o `False`), lanzando `ServicioInvalidoError` o `ServicioNoDisponibleError` y registrando los eventos en `sistema.log`.
+> 2. **Clase Derivada `ReservaSala(Servicio)`:**
+>    - Implementación de `__init__()` con el atributo `capacidad`, sobrescritura polimórfica de `validar_parametros()` (validando capacidad entera positiva `> 0`), sobrescritura y sobrecarga de `calcular_costo()` (variantes por horas, con proyector opcional que solo acepta `True` o `False`, impuestos y descuentos, rechazo de importes no finitos, empleando bloques `try/except/else/finally` y encadenamiento de excepciones `raise ... from e`) y método `describir()`.
+>
+> Todas las líneas de código fueron documentadas de forma clara y precisa. Se realizaron las pruebas secuenciales y automáticas del módulo, y los cambios se integraron al repositorio grupal mediante una rama y un *pull request* revisado por el equipo:
+>
+> - **Enlace del repositorio en GitHub:** https://github.com/Diazbetancourthj/Trabajo-colaborativo-Fase-4
+>
+> Adjunto al foro las evidencias de ejecución secuencial y el informe consolidado en PDF con portada, introducción, enlace de GitHub, conclusiones y referencias en normas APA 7.ª edición.
+>
+> Atentamente,  
+> **[Nombre del Estudiante]**  
+> **Integrante 2 - Curso Programación (213023)**
