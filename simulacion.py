@@ -56,9 +56,8 @@ class SistemaSoftwareFJ:
             # Instancia el objeto Cliente (ejecuta internamente las validaciones estrictas)
             nuevo_cliente = Cliente(nombre, documento, correo)
         except ClienteInvalidoError as e:
-            # Informa en consola que el registro del cliente fue rechazado controladamente
             print(f" [ERROR CLIENTE] Registro rechazado -> {e}")
-            # Retorna None indicando que el cliente no pudo ser creado
+            logging.error(f"Registro de cliente rechazado: {e}")
             return None
         else:
             # Agrega el cliente válido a la lista interna en memoria
@@ -75,9 +74,8 @@ class SistemaSoftwareFJ:
             # Instancia polimórficamente la subclase de Servicio solicitada
             nuevo_servicio = clase_servicio(*args, **kwargs)
         except ServicioInvalidoError as e:
-            # Muestra en consola el error controlado sin interrumpir la aplicación
             print(f" [ERROR SERVICIO] Creación rechazada -> {e}")
-            # Retorna None indicando que el servicio no se agregó a la lista
+            logging.error(f"Creación de servicio rechazada: {e}")
             return None
         else:
             # Almacena el servicio válido en la lista interna de servicios
@@ -322,6 +320,12 @@ def ejecutar_simulacion() -> SistemaSoftwareFJ:
         # Muestra cómo el sistema captura la excepción encadenada y sigue activo
         print(f" [CONTROLADO] Excepción capturada al intentar cancelar reserva no confirmada: {e}")
 
+    # OPERACIÓN 13: Reserva fallida porque el servicio no está disponible
+    print("--- [OPERACIÓN 13] Intento de reserva de un servicio no disponible ---")
+    srv_asesoria.disponible = False
+    sistema.crear_y_confirmar_reserva(cli_laura, srv_asesoria, 1)
+    srv_asesoria.disponible = True
+    
     # Muestra el resumen consolidado de objetos en las listas internas
     sistema.mostrar_resumen_listas()
     # Registra en el archivo de logs la finalización exitosa de las 12 operaciones
