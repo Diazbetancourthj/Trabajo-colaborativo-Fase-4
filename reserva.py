@@ -104,9 +104,12 @@ class Reserva(EntidadSistema):
             if not isinstance(self.servicio, Servicio):
                 # Lanza ServicioInvalidoError si no se proporcionó un objeto Servicio válido
                 raise ServicioInvalidoError("El servicio asociado a la reserva no es una instancia válida.")
-
+            # Verifica que el servicio esté disponible
+            if not self.servicio.disponible:
+                raise ServicioNoDisponibleError("El servicio " + self.servicio.nombre_servicio + " no está disponible.")
+            
             # Ejecuta las validaciones internas del documento del cliente y parámetros del servicio
-            if not self.cliente.validar_documento() or not self.servicio.validar_parametros():
+            if not self.cliente.validar_documento(self.cliente.get_documento()) or not self.servicio.validar_parametros():
                 # Lanza ReservaError si alguna validación retorna False
                 raise ReservaError("Datos inválidos detectados en el cliente o en el servicio.")
 
