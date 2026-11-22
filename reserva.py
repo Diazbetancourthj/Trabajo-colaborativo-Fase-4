@@ -24,6 +24,7 @@ from excepciones import (
     OperacionNoPermitidaError,
     ClienteInvalidoError,
     ServicioInvalidoError,
+    ServicioNoDisponibleError,
 )
 
 
