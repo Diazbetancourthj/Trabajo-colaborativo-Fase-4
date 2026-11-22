@@ -1,11 +1,13 @@
 from abc import ABC, abstractmethod
-from excepciones import ServicioInvalidoError
+from excepciones import ServicioInvalidoError, CalculoCostoError
+
 
 class Servicio(ABC):
     def __init__(self, codigo: str, nombre_servicio: str, costo_base: float):
         self.codigo = codigo
         self.nombre_servicio = nombre_servicio
         self.costo_base = costo_base
+        self.disponible = True
 
     @abstractmethod
     def calcular_costo(self, *args, **kwargs) -> float:
