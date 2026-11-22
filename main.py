@@ -31,3 +31,8 @@ def main():
     finally:
         registrar_evento("Fin del programa")
         print("Programa finalizado")
+
+
+# Esta condición hace que main() se ejecute solo cuando se corre este archivo
+if __name__ == "__main__":
+    main()
