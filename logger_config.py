@@ -1,4 +1,4 @@
-Módulo: logger_config.py
+#Módulo: logger_config.py
 # Descripción: Configuración centralizada del sistema de registro de eventos
 #              y errores (logging) en archivo de texto para Software FJ.
 # ==============================================================================
