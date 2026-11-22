@@ -1,4 +1,4 @@
-Módulo: excepciones.py
+# Módulo: reserva.py
 # Descripción: Define la jerarquía de excepciones personalizadas para el
 #              Sistema Integral de Gestión de Clientes, Servicios y Reservas
 #              de la empresa Software FJ (Curso Programación 213023 - UNAD).
