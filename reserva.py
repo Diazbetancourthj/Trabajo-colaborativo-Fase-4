@@ -1,4 +1,4 @@
- Módulo: reserva.py
+# Módulo: reserva.py
 # Descripción: Define la clase Reserva que integra Cliente, Servicio, duración
 #              y estado, gestionando la confirmación, cancelación y procesamiento
 #              con manejo avanzado y encadenamiento de excepciones.
