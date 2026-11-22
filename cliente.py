@@ -21,3 +21,20 @@ class Cliente:
     # Devuelve el correo del cliente
     def get_correo(self):
         return self.__correo
+
+  # Cambia el nombre solo si es válido
+    def set_nombre(self, nombre):
+        # Si el nombre no es válido, validar_nombre lanza una excepción
+        # y la línea de abajo no se ejecuta
+        self.validar_nombre(nombre)
+        self.__nombre = nombre
+
+    # Cambia el documento solo si es válido
+    def set_documento(self, documento):
+        self.validar_documento(documento)
+        self.__documento = documento
+
+    # Cambia el correo solo si es válido
+    def set_correo(self, correo):
+        self.validar_correo(correo)
+        self.__correo = correo
