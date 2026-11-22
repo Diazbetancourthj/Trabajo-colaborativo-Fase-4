@@ -191,7 +191,7 @@ def validar_segmento_integrante_2() -> None:
 
 def ejecutar_simulacion() -> SistemaSoftwareFJ:
     """
-    Simula 12 operaciones completas (registros válidos e inválidos de clientes,
+    Simula 13 operaciones completas (registros válidos e inválidos de clientes,
     creación correcta e incorrecta de servicios, y reservas exitosas y fallidas).
     """
     # Ejecuta primero la validación secuencial del segmento del Integrante 2
