@@ -1,4 +1,4 @@
-Módulo: simulacion.py
+# Módulo: simulacion.py
 # Descripción: Gestiona las listas internas en memoria (clientes, servicios y
 #              reservas) sin uso de bases de datos, y ejecuta la simulación
 #              secuencial de más de 10 operaciones completas (válidas y fallidas)
