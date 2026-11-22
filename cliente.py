@@ -112,9 +112,7 @@ class Cliente(EntidadSistema):
         # Si pasó todas las revisiones, el correo es válido
         return True
 
-    # Muestra en pantalla los datos del cliente
+     # Muestra en pantalla los datos del cliente
     def mostrar_datos(self):
-        print("Cliente:", self.__nombre)
-        print("Documento:", self.__documento)
-        print("Correo:", self.__correo)
-
+        return ("Cliente: " + self.__nombre + " | Documento: " + str(self.__documento)
+                + " | Correo: " + self.__correo)
